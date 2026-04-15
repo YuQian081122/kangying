@@ -1,5 +1,399 @@
 <!doctype html>
 <html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>康鷹 NAS 部署清單</title>
+  <style>
+    :root { --bg:#f4f7fb; --card:#fff; --text:#192235; --muted:#5a6782; --line:#d9e1ef; --primary:#1d4ed8; --ok:#0f7b42; --warn:#b46902; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--text); font-family:"Segoe UI","Noto Sans TC",Arial,sans-serif; line-height:1.6; }
+    .container { max-width:980px; margin:0 auto; padding:16px; }
+    .hero,.card { background:var(--card); border:1px solid var(--line); border-radius:12px; }
+    .hero { padding:16px; margin-bottom:12px; }
+    h1 { margin:0 0 8px; font-size:clamp(22px,4.8vw,32px); line-height:1.35; }
+    h2 { margin:0 0 8px; font-size:18px; line-height:1.45; }
+    p { margin:0 0 8px; color:var(--muted); }
+    .chips { display:flex; flex-wrap:wrap; gap:8px; }
+    .chip { font-size:12px; border:1px solid var(--line); background:#f8faff; border-radius:999px; padding:4px 10px; }
+    .actions { margin-top:10px; display:flex; gap:8px; flex-wrap:wrap; }
+    button { border:1px solid var(--line); background:#fff; border-radius:8px; padding:8px 10px; cursor:pointer; }
+    .primary { background:var(--primary); border-color:var(--primary); color:#fff; }
+    .grid { display:grid; gap:12px; grid-template-columns:1fr; }
+    @media (min-width:860px) { .grid.two { grid-template-columns:1fr 1fr; } }
+    .card { padding:14px; }
+    ul { margin:8px 0 0; padding-left:20px; }
+    li { margin:6px 0; }
+    .checks { list-style:none; padding-left:0; }
+    .checks li { display:flex; align-items:flex-start; gap:8px; }
+    .checks input { margin-top:4px; }
+    code { background:#eef3ff; border:1px solid #d8e2ff; border-radius:6px; padding:2px 6px; overflow-wrap:anywhere; }
+    .cmd { margin-top:8px; background:#0f172a; color:#e2e8f0; border:1px solid #1e293b; border-radius:10px; padding:10px 12px; font-family:Consolas,"Courier New",monospace; font-size:13px; line-height:1.55; white-space:pre-wrap; overflow-wrap:anywhere; }
+    .ok { color:var(--ok); font-weight:600; }
+    .warn { color:var(--warn); font-weight:600; }
+    .footer { margin-top:12px; color:var(--muted); font-size:13px; }
+    @media print { body { background:#fff; } .actions { display:none; } }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <section class="hero">
+      <h1>康鷹網站 NAS 部署清單</h1>
+      <p>這版已統整可直接使用的指令，含 Git clone、初始化、首次上線、日常更新。</p>
+      <div class="chips">
+        <span class="chip">Repo：YuQian081122/kangying</span>
+        <span class="chip">部署：Docker Compose</span>
+        <span class="chip">日常：npm run nas:go</span>
+      </div>
+      <div class="actions">
+        <button class="primary" id="checkAll">全部勾選</button>
+        <button id="clearAll">全部取消</button>
+        <button onclick="window.print()">列印 / 存 PDF</button>
+      </div>
+    </section>
+
+    <section class="grid two">
+      <article class="card">
+        <h2>1) 先決條件</h2>
+        <ul class="checks">
+          <li><input type="checkbox" />NAS 可 SSH 登入</li>
+          <li><input type="checkbox" />已安裝 Docker 與 Docker Compose</li>
+          <li><input type="checkbox" />網域 A 記錄（@ / www）指向 NAS 公網 IP</li>
+          <li><input type="checkbox" />路由器已轉發 80 / 443 到 NAS</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2>2) 取得專案（可直接貼）</h2>
+        <p>在 NAS 上執行：</p>
+        <div class="cmd">git clone https://github.com/YuQian081122/kangying.git
+cd kangying</div>
+        <p class="ok">你現在可以直接 clone 這個網址，不用再猜。</p>
+      </article>
+    </section>
+
+    <section class="grid two">
+      <article class="card">
+        <h2>3) 初始化（我已幫你建好腳本）</h2>
+        <div class="cmd">chmod +x scripts/*.sh
+npm install
+npm run nas:bootstrap
+npm run nas:doctor</div>
+        <ul class="checks">
+          <li><input type="checkbox" /><code>.env.local</code> 已建立</li>
+          <li><input type="checkbox" /><code>data/json</code>、<code>data/uploads</code>、<code>data/backups</code> 已建立</li>
+          <li><input type="checkbox" />環境檢查通過</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2>4) 編輯環境變數（必做）</h2>
+        <div class="cmd"># 編輯 .env.local
+ADMIN_PASSWORD=請設定強密碼或 bcrypt 雜湊
+DATA_DIR=/data
+DATA_PATH=/volume1/docker/kangying/data</div>
+        <p><span class="warn">注意：</span><code>DATA_PATH</code> 一定要換成你的 NAS 實際路徑。</p>
+      </article>
+    </section>
+
+    <section class="grid two">
+      <article class="card">
+        <h2>5) 首次上線（第一次）</h2>
+        <div class="cmd">npm run nas:deploy
+bash scripts/init-ssl.sh your-email@example.com</div>
+        <ul class="checks">
+          <li><input type="checkbox" />部署成功</li>
+          <li><input type="checkbox" />SSL 憑證申請成功</li>
+          <li><input type="checkbox" />https://kangying.com.tw 可開啟</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2>6) 日常維運（之後主要用）</h2>
+        <div class="cmd"># 日常更新（建議）
+npm run nas:go
+
+# 異常回滾
+npm run nas:rollback
+
+# 手動備份
+npm run backup
+
+# 從備份還原
+npm run nas:restore -- ./data/backups/backup-YYYY-MM-DD_HHMMSS.tar.gz</div>
+        <p class="ok">平常固定跑 <code>npm run nas:go</code> 就好。</p>
+      </article>
+    </section>
+
+    <section class="card">
+      <h2>7) 一條龍指令（從 0 到可更新）</h2>
+      <div class="cmd">git clone https://github.com/YuQian081122/kangying.git
+cd kangying
+chmod +x scripts/*.sh
+npm install
+npm run nas:bootstrap
+npm run nas:doctor
+npm run nas:deploy
+bash scripts/init-ssl.sh your-email@example.com
+
+# 之後更新
+npm run nas:go</div>
+    </section>
+
+    <p class="footer">文件版本：v3（已修正指令、穩定版型）</p>
+  </main>
+
+  <script>
+    window.__checklistBoxes = () => Array.from(document.querySelectorAll('input[type="checkbox"]'));
+    document.getElementById("checkAll").addEventListener("click", () => window.__checklistBoxes().forEach((b) => (b.checked = true)));
+    document.getElementById("clearAll").addEventListener("click", () => window.__checklistBoxes().forEach((b) => (b.checked = false)));
+  </script>
+</body>
+</html>
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>康鷹 NAS 部署清單</title>
+    <style>
+      :root {
+        --bg: #f4f7fb;
+        --card: #ffffff;
+        --text: #192235;
+        --muted: #5a6782;
+        --line: #d9e1ef;
+        --primary: #1d4ed8;
+        --ok: #0f7b42;
+        --warn: #b46902;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: "Segoe UI", "Noto Sans TC", Arial, sans-serif;
+        line-height: 1.6;
+      }
+      .container {
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 16px;
+      }
+      .hero, .card {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+      }
+      .hero {
+        padding: 16px;
+        margin-bottom: 12px;
+      }
+      h1 {
+        margin: 0 0 8px;
+        font-size: clamp(22px, 4.8vw, 32px);
+        line-height: 1.35;
+      }
+      h2 {
+        margin: 0 0 8px;
+        font-size: 18px;
+        line-height: 1.45;
+      }
+      p { margin: 0 0 8px; color: var(--muted); }
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .chip {
+        font-size: 12px;
+        border: 1px solid var(--line);
+        background: #f8faff;
+        border-radius: 999px;
+        padding: 4px 10px;
+      }
+      .actions {
+        margin-top: 10px;
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      button {
+        border: 1px solid var(--line);
+        background: #fff;
+        border-radius: 8px;
+        padding: 8px 10px;
+        cursor: pointer;
+      }
+      .primary {
+        background: var(--primary);
+        border-color: var(--primary);
+        color: #fff;
+      }
+      .grid {
+        display: grid;
+        gap: 12px;
+        grid-template-columns: 1fr;
+      }
+      @media (min-width: 860px) {
+        .grid.two { grid-template-columns: 1fr 1fr; }
+      }
+      .card { padding: 14px; }
+      ul { margin: 8px 0 0; padding-left: 20px; }
+      li { margin: 6px 0; }
+      .checks { list-style: none; padding-left: 0; }
+      .checks li { display: flex; align-items: flex-start; gap: 8px; }
+      .checks input { margin-top: 4px; }
+      code {
+        background: #eef3ff;
+        border: 1px solid #d8e2ff;
+        border-radius: 6px;
+        padding: 2px 6px;
+        overflow-wrap: anywhere;
+      }
+      .cmd {
+        margin-top: 8px;
+        background: #0f172a;
+        color: #e2e8f0;
+        border: 1px solid #1e293b;
+        border-radius: 10px;
+        padding: 10px 12px;
+        font-family: Consolas, "Courier New", monospace;
+        font-size: 13px;
+        line-height: 1.55;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+      }
+      .ok { color: var(--ok); font-weight: 600; }
+      .warn { color: var(--warn); font-weight: 600; }
+      .footer {
+        margin-top: 12px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      @media print {
+        body { background: #fff; }
+        .actions { display: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="container">
+      <section class="hero">
+        <h1>康鷹網站 NAS 部署清單</h1>
+        <p>這版已統整可直接使用的指令，含 Git clone、初始化、首次上線、日常更新。</p>
+        <div class="chips">
+          <span class="chip">Repo：YuQian081122/kangying</span>
+          <span class="chip">部署：Docker Compose</span>
+          <span class="chip">日常：npm run nas:go</span>
+        </div>
+        <div class="actions">
+          <button class="primary" id="checkAll">全部勾選</button>
+          <button id="clearAll">全部取消</button>
+          <button onclick="window.print()">列印 / 存 PDF</button>
+        </div>
+      </section>
+
+      <section class="grid two">
+        <article class="card">
+          <h2>1) 先決條件</h2>
+          <ul class="checks">
+            <li><input type="checkbox" />NAS 可 SSH 登入</li>
+            <li><input type="checkbox" />已安裝 Docker 與 Docker Compose</li>
+            <li><input type="checkbox" />網域 A 記錄（@ / www）指向 NAS 公網 IP</li>
+            <li><input type="checkbox" />路由器已轉發 80 / 443 到 NAS</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h2>2) 取得專案（可直接貼）</h2>
+          <p>在 NAS 上執行：</p>
+          <div class="cmd">git clone https://github.com/YuQian081122/kangying.git
+cd kangying</div>
+          <p class="ok">你現在可以直接 clone 這個網址，不用再猜。</p>
+        </article>
+      </section>
+
+      <section class="grid two">
+        <article class="card">
+          <h2>3) 初始化（我已幫你建好腳本）</h2>
+          <div class="cmd">chmod +x scripts/*.sh
+npm install
+npm run nas:bootstrap
+npm run nas:doctor</div>
+          <ul class="checks">
+            <li><input type="checkbox" /><code>.env.local</code> 已建立</li>
+            <li><input type="checkbox" />`data/json`、`data/uploads`、`data/backups` 已建立</li>
+            <li><input type="checkbox" />環境檢查通過</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h2>4) 編輯環境變數（必做）</h2>
+          <div class="cmd"># 編輯 .env.local
+ADMIN_PASSWORD=請設定強密碼或 bcrypt 雜湊
+DATA_DIR=/data
+DATA_PATH=/volume1/docker/kangying/data</div>
+          <p><span class="warn">注意：</span><code>DATA_PATH</code> 一定要換成你的 NAS 實際路徑。</p>
+        </article>
+      </section>
+
+      <section class="grid two">
+        <article class="card">
+          <h2>5) 首次上線（第一次）</h2>
+          <div class="cmd">npm run nas:deploy
+bash scripts/init-ssl.sh your-email@example.com</div>
+          <ul class="checks">
+            <li><input type="checkbox" />部署成功</li>
+            <li><input type="checkbox" />SSL 憑證申請成功</li>
+            <li><input type="checkbox" />https://kangying.com.tw 可開啟</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h2>6) 日常維運（之後主要用）</h2>
+          <div class="cmd"># 日常更新（建議）
+npm run nas:go
+
+# 異常回滾
+npm run nas:rollback
+
+# 手動備份
+npm run backup
+
+# 從備份還原
+npm run nas:restore -- ./data/backups/backup-YYYY-MM-DD_HHMMSS.tar.gz</div>
+          <p class="ok">平常固定跑 <code>npm run nas:go</code> 就好。</p>
+        </article>
+      </section>
+
+      <section class="card">
+        <h2>7) 一條龍指令（從 0 到可更新）</h2>
+        <div class="cmd">git clone https://github.com/YuQian081122/kangying.git
+cd kangying
+chmod +x scripts/*.sh
+npm install
+npm run nas:bootstrap
+npm run nas:doctor
+npm run nas:deploy
+bash scripts/init-ssl.sh your-email@example.com
+
+# 之後更新
+npm run nas:go</div>
+      </section>
+
+      <p class="footer">文件版本：v3（已修正指令、穩定版型）</p>
+    </main>
+
+    <script>
+      window.__checklistBoxes = () => Array.from(document.querySelectorAll('input[type="checkbox"]'));
+      document.getElementById("checkAll").addEventListener("click", () => window.__checklistBoxes().forEach((b) => (b.checked = true)));
+      document.getElementById("clearAll").addEventListener("click", () => window.__checklistBoxes().forEach((b) => (b.checked = false)));
+    </script>
+  </body>
+</html>
+<!doctype html>
+<html lang="zh-Hant">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -266,9 +660,9 @@ npm run nas:go</div>
     </div>
 
     <script>
-      const boxes = () => Array.from(document.querySelectorAll('input[type="checkbox"]'));
-      document.getElementById("checkAll").addEventListener("click", () => boxes().forEach((b) => (b.checked = true)));
-      document.getElementById("clearAll").addEventListener("click", () => boxes().forEach((b) => (b.checked = false)));
+      window.__checklistBoxes = () => Array.from(document.querySelectorAll('input[type="checkbox"]'));
+      document.getElementById("checkAll").addEventListener("click", () => window.__checklistBoxes().forEach((b) => (b.checked = true)));
+      document.getElementById("clearAll").addEventListener("click", () => window.__checklistBoxes().forEach((b) => (b.checked = false)));
     </script>
   </body>
 </html>
