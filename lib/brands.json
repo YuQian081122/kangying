@@ -1,0 +1,37 @@
+[
+  {
+    "id": "AgEagle",
+    "name": "AgEagle",
+    "description": "AgEagle 是一家領先全球的無人機解決方案提供商，為能源、建築、農業和政府垂直整合領域的客戶提供服務。透過我們專注於一流飛行硬體、感測器和軟體的三個卓越中心，AgEagle 正在提供創新的自主機器人解決方案，提高資料收集的自動化，幫助我們的客戶解決問題。",
+    "shortDescription": "提供 eBee VISION ISR 固定翼無人機，專為公共安全與國防任務設計，具備低噪音、低可見度與高機動性。",
+    "logoImage": "/brands/ageagle.png"
+  },
+  {
+    "id": "DATEM",
+    "name": "DAT/EM",
+    "description": "DAT/EM Systems International®總部位在美國，可從立體影像、點雲和無人駕駛飛機系統（UAS）資料中高效提取和編輯3D地形和物體特徵，隨時瞭解行業趨勢和進步，並始終以價值、技術和服務為榜樣。",
+    "shortDescription": "提供 Summit Evolution 立體測圖軟體，支援從立體數據中提取和編輯 3D 地形特徵，包含 CAD/GIS 界面與等高線生成等專業工具。",
+    "logoImage": "/brands/datem.png"
+  },
+  {
+    "id": "SHARE",
+    "name": "SHARE",
+    "description": "SHARE UAV是一家集傾斜攝影相機研發、生產、銷售與無人機航測整合方案為一體的技術企業。已擁有多個成熟系列產品，其中包括專注性價比的1.2億像素傾斜攝影相機102S系列；智慧城市專用的旗艦性能傾斜攝影相機203S系列；3.05億像素的行業旗艦傾斜攝影相機304S系列；以及廣泛應用於二維平面的全片幅正射航測相機6100系列。",
+    "shortDescription": "提供 SLAM S10 與 SLAM S20 手持式光達掃描儀，具備即時真實色彩顯示、高精度掃描與 RTK 定位功能。",
+    "logoImage": "/brands/share.png"
+  },
+  {
+    "id": "XGRIDS",
+    "name": "XGRIDS",
+    "description": "XGRIDS提供創新的三維內容生成工具和開發平台，將空間智能技術轉化為成熟可用的軟硬件產品，提高不同行業的模型生產與智能化運行效率，推動三維技術的全面普及。",
+    "shortDescription": "提供 Lixel L2 Pro 旋轉式雷射光雷達、LixelKity K1 手持式雷射掃描器與 PortalCam-XGRIDS-3D 空間相機，支援高精度 3D 掃描與即時空間感知。",
+    "logoImage": "/brands/xgrids.png"
+  },
+  {
+    "id": "Schneider",
+    "name": "Schneider",
+    "description": "位於德國的 Schneider Digital 可提供您最佳的硬體解決方案，以滿足 4K/8K、3D 和 VR/AR 領域最高系統要求的專業用途。",
+    "shortDescription": "提供 Stealth 3D Mouse S2-V 人體工學滑鼠、3D PluraView Compact 22\" Full HD 與 Impact 24\" 2x4K 144Hz 立體顯示器，適用於地理空間成像與 CAD 設計。",
+    "logoImage": "/brands/schneider.png"
+  }
+]

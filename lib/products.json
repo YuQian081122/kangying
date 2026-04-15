@@ -1,0 +1,290 @@
+[
+  {
+    "id": "ageagle-ebee-vision",
+    "name": "eBee VISION 即時情勢感知無人機",
+    "category": "航空測量",
+    "type": "uav",
+    "description": "eBee VISION 是一款專為公共安全單位與情報、監視與偵察（ISR）任務打造的即時情勢感知固定翼無人機平台，可依國防與安全需求進行客製化配置，提供高行動力與高可靠度的任務支援。",
+    "slug": "AgEagle",
+    "brand": "AgEagle",
+    "coverImage": "/product-covers/ageagle-ebee.png",
+    "images": [
+      "/products/ageagle/eBee_vision/ebee-vision-hero.jpg",
+      "/products/ageagle/eBee_vision/1.jpg",
+      "/products/ageagle/eBee_vision/2.jpg",
+      "/products/ageagle/eBee_vision/3.jpg",
+      "/products/ageagle/eBee_vision/4.jpg",
+      "/products/ageagle/eBee_vision/5.jpg",
+      "/products/ageagle/eBee_vision/6.jpg",
+      "/products/ageagle/eBee_vision/7.jpg",
+      "/products/ageagle/eBee_vision/8.jpg"
+    ],
+    "features": [
+      "低噪音與低可見度設計，有利於隱蔽執行 ISR 任務",
+      "機身重量約 1.6 kg，單人即可攜帶與操作，約 3 分鐘即可完成部署",
+      "最長可達約 90 分鐘飛行時間，支援長時間任務覆蓋",
+      "提供 HD 即時影像傳輸，作業半徑約 20 公里",
+      "32 倍 RGB 變焦搭配 5 倍熱像變焦，可在日夜與惡劣環境下辨識目標",
+      "支援 Cursor-on-Target (CoT) 等戰術資料格式，方便與指管系統整合",
+      "採用 AES‑256 等級資料鏈路加密與加密儲存，強化任務資安防護"
+    ],
+    "tags": [
+      "ISR",
+      "公共安全",
+      "國土安全",
+      "即時影像"
+    ],
+    "link": "/products/AgEagle",
+    "highlight": true
+  },
+  {
+    "id": "datem-summit-evolution",
+    "name": "Summit Evolution 立體測圖軟體",
+    "category": "立體製圖",
+    "type": "software",
+    "description": "Summit Evolution 是一款由 DAT/EM Systems International 開發的軟體，它提供了一套強大的工具，用於從立體數據中發現和捕捉3D信息。該軟件包括 CAD 和 GIS 界面、3D 立體向量疊加、自動特徵編輯、等高線生成等多種工具。",
+    "slug": "DATEM",
+    "brand": "DATEM",
+    "images": [
+      "/products/datem/Summit_Evolution/main.jpg"
+    ],
+    "features": [
+      "提供強大的工具套件，用於從立體數據中發現和捕捉3D信息",
+      "包含 CAD 和 GIS 界面，方便與現有工作流程整合",
+      "支援 3D 立體向量疊加功能",
+      "提供自動特徵編輯工具，提升作業效率",
+      "具備等高線生成功能，適用於地形製圖"
+    ],
+    "tags": [
+      "軟體",
+      "立體製圖",
+      "3D測圖"
+    ],
+    "link": "/products/DATEM",
+    "highlight": true
+  },
+  {
+    "id": "share-slam-s10",
+    "name": "SHARE SLAM S10 手持式光達掃描儀",
+    "category": "無人機測繪",
+    "type": "lidar",
+    "description": "SLAM S10 手持式光達掃描儀，即時真實色彩：眼見為實。",
+    "slug": "SLAM_S10",
+    "brand": "SHARE",
+    "images": [
+      "/products/share/SLAM_S10/1.jpg",
+      "/products/share/SLAM_S10/2.jpg",
+      "/products/share/SLAM_S10/3.jpg",
+      "/products/share/SLAM_S10/4.jpg",
+      "/products/share/SLAM_S10/5.jpg",
+      "/products/share/SLAM_S10/6.jpg",
+      "/products/share/SLAM_S10/7.jpg",
+      "/products/share/SLAM_S10/8.jpg",
+      "/products/share/SLAM_S10/9.jpg",
+      "/products/share/SLAM_S10/10.jpg",
+      "/products/share/SLAM_S10/11.jpg"
+    ],
+    "features": [
+      "手持式光達掃描儀，操作簡便",
+      "即時真實色彩顯示，眼見為實",
+      "適用於室內外多種測繪場景"
+    ],
+    "tags": [
+      "LiDAR",
+      "手持式",
+      "光達掃描"
+    ],
+    "link": "/products/SLAM_S10",
+    "highlight": true
+  },
+  {
+    "id": "share-slam-s20",
+    "name": "SHARE SLAM S20 手持式光達掃描儀",
+    "category": "無人機測繪",
+    "type": "lidar",
+    "description": "SLAM S20 手持式光達掃描儀，快速建模，精準呈現：效率新標竿。",
+    "slug": "SLAM_S20",
+    "brand": "SHARE",
+    "coverImage": "/product-covers/share-s20.png",
+    "images": [
+      "/products/share/SLAM_S20/1.jpg",
+      "/products/share/SLAM_S20/2.jpg",
+      "/products/share/SLAM_S20/3.jpg",
+      "/products/share/SLAM_S20/4.jpg"
+    ],
+    "features": [
+      "高精度掃描，即掃即得",
+      "輕便續航，隨行測繪",
+      "複雜環境，精準建模",
+      "RTK 定位，效率倍增",
+      "真實色彩，細節還原",
+      "多場景應用，一機搞定"
+    ],
+    "tags": [
+      "LiDAR",
+      "手持式",
+      "高精度",
+      "RTK"
+    ],
+    "link": "/products/SLAM_S20",
+    "highlight": true
+  },
+  {
+    "id": "xgrids-lixel-l2-pro",
+    "name": "Lixel L2 Pro 高精度旋轉式雷射光雷達3D 掃描器",
+    "category": "無人機測繪",
+    "type": "lidar",
+    "description": "XGRIDS Lixel L2 Pro 採用先進旋轉式雷射掃描技術，具備卓越的 3D 空間建模能力與高密度資料回傳性能，為自動化與智慧設備帶來前所未有的立體視野。搭載雙線雷射模組與 360° 持續旋轉設計，高達100萬點/㎡掃描速率，提供完整且細緻的三維點雲資料，無論是室內導航、無人載具、工地監控或數位建模，皆能給予準確、即時的 3D 數據支援。",
+    "slug": "Lixel_L2_Pro",
+    "brand": "XGRIDS",
+    "coverImage": "/product-covers/xgrids-l2-pro.png",
+    "images": [
+      "/products/xgrids/Lixel_L2_Pro/L2Pro.jpg"
+    ],
+    "features": [
+      "極致精準：毫米等級精度，細節呈現無遺",
+      "全景掃描：360° 水平旋轉 + 多線雷射，實現全方位空間感知",
+      "即插即用：高相容性設計，快速整合各類平台與應用",
+      "專業可靠：通過多項工業級測試，穩定運行無懼惡劣環境",
+      "多元應用：從自駕車到數位孿生，全面支援未來應用趨勢"
+    ],
+    "tags": [
+      "LiDAR",
+      "3D掃描",
+      "高精度"
+    ],
+    "link": "/products/Lixel_L2_Pro",
+    "highlight": true
+  },
+  {
+    "id": "xgrids-lixelkity-k1",
+    "name": "LixelKity K1 全景雙鏡頭手持式雷射3D 掃描器",
+    "category": "無人機測繪",
+    "type": "lidar",
+    "description": "XGRIDS LixelKity K1 是一款專為新世代智慧應用打造的輕量級 3D 雷射雷達掃描器，結合高性能感測技術與極致輕巧設計，為無人系統、機器人視覺與空間建模帶來全新可能。LixelKity K1 延續 XGRIDS 對精度與可靠性的高標準，搭載先進單線旋轉雷射模組，具備穩定的掃描效能與快速反應能力，即使在狹小或複雜環境中也能靈活部署、精準感知。",
+    "slug": "LixelKity_K1",
+    "brand": "XGRIDS",
+    "coverImage": "/product-covers/xgrids-k1.png",
+    "images": [
+      "/products/xgrids/LixelKity_K1/K1.jpg"
+    ],
+    "features": [
+      "超輕量設計：重量極低，完美適配無人機、移動機器人對載重敏感的應用",
+      "高效率掃描：快速刷新率與高靈敏雷射模組，確保動態場景即時捕捉",
+      "360° 全向感知：環繞式掃描視野，打造無盲點空間感知系統",
+      "低功耗、高穩定：長時間運行依然表現出色，兼顧節能與效能",
+      "靈活整合：支援多種通訊介面與開發平台，加速系統整合流程"
+    ],
+    "tags": [
+      "LiDAR",
+      "手持式",
+      "輕量級"
+    ],
+    "link": "/products/LixelKity_K1",
+    "highlight": true
+  },
+  {
+    "id": "xgrids-portalcam-3d",
+    "name": "PortalCam-XGRIDS-3D 空間相機",
+    "category": "無人機測繪",
+    "type": "camera",
+    "description": "PortalCam-XGRIDS-3D 是一款先進的空間感知攝影系統，專為高精度 3D 建模與實時空間捕捉設計。整合了多點深度感測技術與 XGRIDS 演算法架構，PortalCam-XGRIDS-3D 能即時建立高解析度的三維空間資料，適用於智慧城市建構、AR/VR 應用、工業自動化以及機器人導航等場景。",
+    "slug": "PortalCam_XGRIDS_3D",
+    "brand": "XGRIDS",
+    "coverImage": "/product-covers/xgrids-portalcam.png",
+    "images": [
+      "/products/xgrids/PortalCam-XGRIDS-3D/PortalCam.jpg"
+    ],
+    "features": [
+      "XGRIDS 3D 引擎：高效處理大規模點雲數據，自動完成空間網格化與重建",
+      "即時多角度同步捕捉：支援多裝置協同運作，保證資料整合準確且穩定",
+      "AI 驅動辨識與追蹤：內建智慧演算法，可即時辨識物體輪廓、動態追蹤移動目標",
+      "高兼容性設計：支援多種開發框架與平台，便於整合至現有系統"
+    ],
+    "tags": [
+      "3D相機",
+      "空間感知",
+      "AI"
+    ],
+    "link": "/products/PortalCam_XGRIDS_3D",
+    "highlight": true
+  },
+  {
+    "id": "schneider-stealth-3d-mouse-s2v",
+    "name": "Stealth 3D Mouse S2-V",
+    "category": "立體製圖",
+    "type": "stereo_equipment",
+    "description": "Stealth 3D Mouse S2-V 是一款專為 3D 應用而開發的滑鼠。它具有舒適的握把和人體工學設計，可減少疲勞。此外，它還具有高精度和高靈敏度，可提供更好的控制和操作性。",
+    "slug": "Stealth_3D_Mouse_S2V",
+    "brand": "Schneider",
+    "coverImage": "/product-covers/schneider-stealth.png",
+    "images": [
+      "/products/schnelder/Stealth_3D_Mouse_S2-V/s2v1.jpg"
+    ],
+    "features": [
+      "專為 3D 應用而開發的滑鼠",
+      "舒適的握把和人體工學設計，可減少疲勞",
+      "高精度和高靈敏度，提供更好的控制和操作性"
+    ],
+    "tags": [
+      "硬體設備",
+      "3D滑鼠",
+      "人體工學"
+    ],
+    "link": "/products/Stealth_3D_Mouse_S2V",
+    "highlight": true
+  },
+  {
+    "id": "schneider-pluraview-compact22",
+    "name": "3D PluraView Compact 22\" Full HD B",
+    "category": "立體製圖",
+    "type": "stereo_equipment",
+    "description": "3D PluraView Compact 22\" 是一款由德國 Schneider Digital 公司生產的高性能 3D 立體顯示器，適用於專業應用領域，如地理空間成像、CAD 設計和醫學成像等。該顯示器具有 1920×1080 像素的分辨率，使用主動式快門技術產生立體 3D 效果。該顯示器可與偏振或主動式 3D 眼鏡一起使用，旨在提供高度細節和清晰度的 3D 圖像和模型。",
+    "slug": "PluraView_Compact22",
+    "brand": "Schneider",
+    "images": [
+      "/products/schnelder/3D_PluraView_Compact_22_Full_HD_B/sd221.jpg"
+    ],
+    "features": [
+      "1920×1080 像素 Full HD 分辨率",
+      "主動式快門技術產生立體 3D 效果",
+      "可與偏振或主動式 3D 眼鏡一起使用",
+      "提供高度細節和清晰度的 3D 圖像和模型",
+      "適用於地理空間成像、CAD 設計和醫學成像等專業應用"
+    ],
+    "tags": [
+      "硬體設備",
+      "3D顯示器",
+      "立體製圖"
+    ],
+    "link": "/products/PluraView_Compact22",
+    "highlight": true
+  },
+  {
+    "id": "schneider-pluraview-impact24",
+    "name": "3D PluraView Impact 24\" Full HD 144Hz B",
+    "category": "立體製圖",
+    "type": "stereo_equipment",
+    "description": "3D PluraView Impact 24\" 是一款由德國 Schneider Digital 公司生產的3D立體顯示器，它採用了分光鏡技術，可以實現無閃爍和高分辨率的視覺效果，為用戶帶來完美的 3D 立體體驗。它的分辨率為 2x4K，色深高達10位，可以實現極其舒適、精確和像素精確的圖像評估。此外，它還具有 144Hz 的刷新率，可以實現更流暢的圖像顯示。",
+    "slug": "PluraView_Impact24",
+    "brand": "Schneider",
+    "images": [
+      "/products/schnelder/3D_PluraView_Compact_24_Full_HD_144Hz_B/sd241.jpg"
+    ],
+    "features": [
+      "2x4K 分辨率，色深高達10位",
+      "分光鏡技術，實現無閃爍和高分辨率的視覺效果",
+      "144Hz 刷新率，實現更流暢的圖像顯示",
+      "極其舒適、精確和像素精確的圖像評估",
+      "完美的 3D 立體體驗"
+    ],
+    "tags": [
+      "硬體設備",
+      "3D顯示器",
+      "4K",
+      "144Hz"
+    ],
+    "link": "/products/PluraView_Impact24",
+    "highlight": true
+  }
+]

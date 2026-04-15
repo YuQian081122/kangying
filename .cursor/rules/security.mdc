@@ -1,0 +1,30 @@
+---
+description: 安全性開發規範
+globs: "{middleware.ts,app/api/**/*.ts,nginx/**}"
+alwaysApply: false
+---
+
+# 安全規範
+
+## 認證
+
+- 管理後台使用 `__Host-upload_auth` cookie（Secure、HttpOnly、SameSite=Strict）
+- 密碼以 bcrypt 雜湊儲存，明文比對僅作為開發環境 fallback
+- 登入端點 `/api/upload/auth` 有 IP 級 rate limit（5次/分鐘）+ 應用層鎖定
+
+## HTTP 安全標頭（middleware.ts）
+
+必須維持以下標頭，不得移除：
+- `Content-Security-Policy`
+- `Strict-Transport-Security`（max-age=63072000, includeSubDomains, preload）
+- `X-Content-Type-Options: nosniff`
+- `X-Frame-Options: SAMEORIGIN`
+- `Referrer-Policy: strict-origin-when-cross-origin`
+- `Permissions-Policy`（禁用 camera、microphone、geolocation）
+
+## API 安全
+
+- 所有 `/api/upload/` 端點必須驗證 `__Host-upload_auth` cookie
+- 檔案上傳需檢查 MIME type 白名單與大小限制（Nginx: 15MB）
+- 路徑參數需做 sanitize 防止路徑遍歷攻擊（`..` 過濾）
+- 錯誤回應不得包含內部路徑或堆疊追蹤

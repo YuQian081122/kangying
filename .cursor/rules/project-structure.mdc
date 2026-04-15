@@ -1,0 +1,50 @@
+---
+description: 康鷹空間資訊專案結構與開發慣例
+alwaysApply: true
+---
+
+# 專案結構
+
+康鷹空間資訊（kangying.com.tw）— Next.js 14 App Router 企業官網 + 產品展示 + 畫布編輯系統。
+
+## 目錄結構
+
+```
+app/                  # Next.js App Router 頁面與 API
+  api/upload/         # 管理後台 API（需認證）
+  api/uploads/        # 本地檔案靜態服務
+  products/           # 產品頁面（動態路由 [slug]）
+components/           # React 元件
+  SectionCanvas.tsx   # 首頁區段畫布編輯器
+  ProductCanvas.tsx   # 產品頁畫布編輯器
+  HomeContent.tsx     # 首頁主要內容（含 ServicesSection）
+  ProductCard.tsx     # 產品卡片（含封面圖焦點編輯）
+  Footer.tsx          # 全站頁尾（含聯絡資訊）
+lib/
+  blob-data.ts        # 本地檔案系統資料存取層
+  products.ts         # 產品/品牌型別定義與靜態資料匯出
+  products.json       # 產品初始資料（建構時使用）
+  brands.json         # 品牌初始資料
+data/                 # 執行期資料（不納入版控）
+  json/               # products.json, brands.json, page-layouts.json
+  uploads/            # 使用者上傳的圖片/影片
+  backups/            # 備份快照
+public/
+  products/           # 產品原始圖片
+  product-covers/     # 產品封面圖
+scripts/              # 部署/備份腳本
+nginx/                # Nginx 設定檔
+```
+
+## 資料流
+
+1. **建構時**：`lib/products.json` → 靜態匯入 → 伺服器元件
+2. **執行時**：`data/json/products.json` → `lib/blob-data.ts` API 讀寫
+3. 兩份 JSON 需保持同步；修改產品資料時，`data/json/` 與 `lib/` 的版本都要更新
+
+## 畫布系統
+
+- `SectionCanvas`：首頁通用區段編輯，資料存在 `page-layouts.json`
+- `ProductCanvas`：產品頁專用，資料存在 `products.json` 的 `detailLayout`
+- 畫布元件使用 `react-rnd`，以 `lazy` 方式載入避免影響首次載入效能
+- 支援元素類型：`title`、`paragraph`、`image`、`video`、`featureList`、`card`、`button`

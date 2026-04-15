@@ -1,0 +1,33 @@
+---
+description: 畫布編輯系統開發規範
+globs: "{components/SectionCanvas.tsx,components/ProductCanvas.tsx,components/HomeContent.tsx}"
+alwaysApply: false
+---
+
+# 畫布編輯系統
+
+## 架構原則
+
+- 讀取模式使用輕量 `StaticElement` 渲染，不載入 `react-rnd`
+- 編輯模式以 `React.lazy` 動態載入 `CanvasElementWrapper`
+- 每次進入編輯模式時保存初始快照（`initialLayoutRef`），支援「捨棄變更」
+- 歷史堆疊（Undo/Redo）使用 `useRef` 管理，避免不必要的重繪
+
+## 元素類型
+
+| type | 用途 | 必要 props |
+|------|------|-----------|
+| `title` | 標題文字 | `text`, `fontSize` |
+| `paragraph` | 段落文字 | `text`, `fontSize` |
+| `image` | 圖片 | `src`, `alt` |
+| `video` | 影片 | `src` |
+| `featureList` | 特色列表 | `items[]` |
+| `card` | 卡片元件 | `title`, `content` |
+| `button` | 按鈕 | `text`, `href` |
+
+## 注意事項
+
+- 新增元素類型時，需同時更新 `SectionCanvas` 和 `ProductCanvas` 的 `renderElementContentStatic` 與 `renderEditContent`
+- Card 元素必須保留 hover 動效（`hover:-translate-y-1`）和 `overflow-hidden`
+- 拖曳手把使用小圓點形式，避免遮擋內容
+- 文字方塊預設尺寸不得小於 `width: 500, height: 180`

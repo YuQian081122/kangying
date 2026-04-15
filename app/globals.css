@@ -1,0 +1,317 @@
+@import "react-quill/dist/quill.snow.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* 深色模式（夜間儀器室風格） */
+    --background: 222 50% 7%;
+    --foreground: 210 40% 98%;
+    --card: 222 50% 10%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222 50% 10%;
+    --popover-foreground: 210 40% 98%;
+    /* 深藍主色 + 青綠輔色 */
+    --primary: 210 80% 50%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 190 60% 40%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 222 32% 18%;
+    --muted-foreground: 215 20% 70%;
+    --accent: 200 70% 45%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 70% 40%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 222 32% 22%;
+    --input: 222 32% 22%;
+    --ring: 210 80% 50%;
+    --radius: 0.75rem;
+  }
+
+  .light {
+    /* 淺色模式（企業簡潔白底） */
+    --background: 210 40% 99%;
+    --foreground: 222 45% 12%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 45% 12%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 45% 12%;
+    --primary: 210 80% 45%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 190 60% 40%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 210 30% 96%;
+    --muted-foreground: 215 15% 50%;
+    --accent: 190 55% 92%;
+    --accent-foreground: 210 50% 20%;
+    --destructive: 0 72% 55%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 210 30% 90%;
+    --input: 210 30% 90%;
+    --ring: 210 80% 45%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+/* React Quill editor 基本樣式調整 */
+.ql-editor {
+  min-height: 240px;
+}
+
+.ql-editor img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  cursor: move;
+}
+
+/* 產品詳細內容（紅框區域）樣式 */
+.product-detail-content {
+  font-size: 0.9rem;
+  line-height: 1.75;
+}
+
+.product-detail-content h2,
+.product-detail-content h3,
+.product-detail-content h4 {
+  font-weight: 600;
+  margin-top: 1.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.product-detail-content p {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.product-detail-content ul,
+.product-detail-content ol {
+  padding-left: 1.5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.product-detail-content img {
+  display: block;
+  margin: 1.25rem auto;
+  max-width: 100%;
+  height: auto;
+}
+
+@layer utilities {
+  @keyframes carousel-slide-in-right {
+    from {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes carousel-slide-in-left {
+    from {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes carousel-slide-out-left {
+    from {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    to {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+  }
+
+  @keyframes carousel-slide-out-right {
+    from {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    to {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+  }
+
+  .animate-carousel-slide-in-right {
+    animation: carousel-slide-in-right 0.5s ease-out forwards;
+  }
+
+  .animate-carousel-slide-in-left {
+    animation: carousel-slide-in-left 0.5s ease-out forwards;
+  }
+
+  .animate-carousel-slide-out-left {
+    animation: carousel-slide-out-left 0.5s ease-in forwards;
+  }
+
+  .animate-carousel-slide-out-right {
+    animation: carousel-slide-out-right 0.5s ease-in forwards;
+  }
+}
+
+/* Laser border animation */
+.laser-border-container {
+  position: relative;
+}
+
+.laser-border {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  padding: 2px;
+  background: linear-gradient(90deg, 
+    hsl(var(--primary)) 0%, 
+    transparent 50%, 
+    hsl(var(--primary)) 100%);
+  background-size: 200% 100%;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: laser-border-animation 3s linear infinite;
+}
+
+@keyframes laser-border-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+/* Font space for custom font */
+.font-space {
+  font-family: var(--font-space, sans-serif);
+}
+
+/* Logo border animation - Flowing gradient border */
+.logo-container {
+  position: relative;
+  overflow: visible;
+}
+
+.logo-border {
+  border-width: 5px;
+  border-style: solid;
+  border-color: rgba(59, 130, 246, 0.3);
+  position: relative;
+}
+
+/* Flowing gradient border animation */
+.logo-container::before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  border-radius: 0.5rem;
+  background: linear-gradient(
+    90deg,
+    #3b82f6 0%,
+    #60a5fa 12.5%,
+    #93c5fd 25%,
+    #bfdbfe 37.5%,
+    #93c5fd 50%,
+    #60a5fa 62.5%,
+    #3b82f6 75%,
+    #2563eb 87.5%,
+    #3b82f6 100%
+  );
+  background-size: 200% 100%;
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  padding: 5px;
+  animation: logo-gradient-flow 3s linear infinite;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.logo-container::after {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  border-radius: 0.5rem;
+  background: linear-gradient(
+    270deg,
+    #60a5fa 0%,
+    #93c5fd 12.5%,
+    #bfdbfe 25%,
+    #dbeafe 37.5%,
+    #bfdbfe 50%,
+    #93c5fd 62.5%,
+    #60a5fa 75%,
+    #3b82f6 87.5%,
+    #60a5fa 100%
+  );
+  background-size: 200% 100%;
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  padding: 5px;
+  animation: logo-gradient-flow-reverse 4s linear infinite;
+  z-index: -2;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.logo-container > div {
+  background: white;
+  border-radius: 0.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes logo-gradient-flow {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 200% 0%;
+  }
+}
+
+@keyframes logo-gradient-flow-reverse {
+  0% {
+    background-position: 200% 0%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}

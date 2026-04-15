@@ -1,0 +1,632 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>NAS 部署一頁清單｜康鷹空間資訊</title>
+    <style>
+      :root {
+        --bg: #f3f6fb;
+        --card: #ffffff;
+        --text: #1a2233;
+        --muted: #5a6781;
+        --line: #d9e1ef;
+        --primary: #245bdb;
+        --ok: #107a43;
+        --warn: #b26a00;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font: 16px/1.6 "Segoe UI", "Noto Sans TC", Arial, sans-serif;
+      }
+      .wrap {
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 16px;
+      }
+      .hero, .card {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+      }
+      .hero {
+        padding: 16px;
+        margin-bottom: 12px;
+      }
+      .hero h1 {
+        margin: 0 0 6px;
+        font-size: clamp(20px, 4.5vw, 30px);
+        line-height: 1.35;
+      }
+      .hero p {
+        margin: 0;
+        color: var(--muted);
+      }
+      .row {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+      .card { padding: 14px; }
+      .card h2 {
+        margin: 0 0 8px;
+        font-size: 18px;
+        line-height: 1.45;
+      }
+      .card p {
+        margin: 0 0 8px;
+        color: var(--muted);
+      }
+      ul {
+        margin: 8px 0 0;
+        padding-left: 20px;
+      }
+      li { margin: 6px 0; }
+      .checks {
+        list-style: none;
+        padding-left: 0;
+      }
+      .checks li {
+        display: flex;
+        gap: 8px;
+        align-items: flex-start;
+      }
+      .checks input {
+        margin-top: 4px;
+        flex: 0 0 auto;
+      }
+      code {
+        background: #eef3ff;
+        border: 1px solid #d8e2ff;
+        border-radius: 6px;
+        padding: 2px 6px;
+        overflow-wrap: anywhere;
+      }
+      .cmd {
+        margin-top: 8px;
+        background: #0f172a;
+        color: #e2e8f0;
+        border-radius: 10px;
+        padding: 10px 12px;
+        border: 1px solid #1e293b;
+        font-family: Consolas, "Courier New", monospace;
+        font-size: 13px;
+        line-height: 1.55;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+      }
+      .tagline {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 10px;
+      }
+      .tag {
+        font-size: 12px;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: #f8faff;
+        padding: 4px 10px;
+        color: #3b4b69;
+      }
+      .ok { color: var(--ok); font-weight: 600; }
+      .warn { color: var(--warn); font-weight: 600; }
+      .footer {
+        margin-top: 12px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .btns { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+      button {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 8px 10px;
+        background: #fff;
+        cursor: pointer;
+      }
+      button.primary {
+        background: var(--primary);
+        border-color: var(--primary);
+        color: #fff;
+      }
+      @media (min-width: 860px) {
+        .row.two {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      @media print {
+        body { background: #fff; }
+        .btns { display: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <section class="hero">
+        <h1>NAS 部署一頁清單（最精簡版）</h1>
+        <p>你只要照這一頁做，就可以從 Windows 專案順利搬到 NAS 上線。</p>
+        <div class="tagline">
+          <span class="tag">網域：kangying.com.tw</span>
+          <span class="tag">架構：Next.js + Docker + Nginx + Certbot</span>
+          <span class="tag">日常更新：<code>npm run nas:go</code></span>
+        </div>
+        <div class="btns">
+          <button class="primary" id="checkAll">全部勾選</button>
+          <button id="clearAll">全部取消</button>
+          <button onclick="window.print()">列印 / 存成 PDF</button>
+        </div>
+      </section>
+
+      <section class="row two">
+        <article class="card">
+          <h2>1) 先決條件</h2>
+          <ul class="checks">
+            <li><input type="checkbox" />NAS 可 SSH 登入</li>
+            <li><input type="checkbox" />已安裝 Docker / Docker Compose</li>
+            <li><input type="checkbox" />DNS 已指向 NAS 公網 IP（@ 與 www）</li>
+            <li><input type="checkbox" />路由器轉發 80 與 443</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h2>2) 取得專案（你問的 git clone）</h2>
+          <p>目前你的本機資料夾不是 git 倉庫，所以有兩種做法：</p>
+          <ul>
+            <li><strong>A. 有遠端 Git：</strong>請把網址填進下面指令。</li>
+            <li><strong>B. 沒有遠端 Git：</strong>直接把整個專案資料夾上傳到 NAS。</li>
+          </ul>
+          <div class="cmd"># A. 有 Git 遠端時（把 URL 換成你的）
+git clone https://&lt;your-git-url&gt;/web.git
+cd web
+
+# B. 沒有 Git 遠端時
+# 直接將目前這個資料夾完整上傳到 NAS，然後進入該目錄</div>
+        </article>
+      </section>
+
+      <section class="row two">
+        <article class="card">
+          <h2>3) 初始化（我已幫你做腳本）</h2>
+          <p>在專案目錄執行：</p>
+          <div class="cmd">chmod +x scripts/*.sh
+npm run nas:bootstrap
+npm run nas:doctor</div>
+          <ul class="checks">
+            <li><input type="checkbox" /><code>.env.local</code> 已建立（若不存在）</li>
+            <li><input type="checkbox" />`data/json`, `data/uploads`, `data/backups` 已建立</li>
+            <li><input type="checkbox" />環境檢查通過</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h2>4) 先改這三個值</h2>
+          <div class="cmd"># 編輯 .env.local
+ADMIN_PASSWORD=請換成強密碼或bcrypt雜湊
+DATA_DIR=/data
+DATA_PATH=/volume1/docker/kangying/data</div>
+          <p><span class="warn">注意：</span> <code>DATA_PATH</code> 一定要改成你的 NAS 真實路徑。</p>
+          <ul class="checks">
+            <li><input type="checkbox" />已設定 ADMIN_PASSWORD</li>
+            <li><input type="checkbox" />已設定正確 DATA_PATH</li>
+          </ul>
+        </article>
+      </section>
+
+      <section class="row two">
+        <article class="card">
+          <h2>5) 首次上線指令（完整）</h2>
+          <div class="cmd">npm run nas:deploy
+bash scripts/init-ssl.sh your-email@example.com</div>
+          <ul class="checks">
+            <li><input type="checkbox" />部署成功</li>
+            <li><input type="checkbox" />SSL 申請成功</li>
+            <li><input type="checkbox" />https://kangying.com.tw 可開啟</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h2>6) 日常維運（你之後只要記這區）</h2>
+          <div class="cmd"># 日常更新（建議）
+npm run nas:go
+
+# 出問題回滾
+npm run nas:rollback
+
+# 手動備份
+npm run backup
+
+# 從備份還原
+npm run nas:restore -- ./data/backups/backup-YYYY-MM-DD_HHMMSS.tar.gz</div>
+          <p class="ok">建議：平常就固定跑 <code>npm run nas:go</code>。</p>
+        </article>
+      </section>
+
+      <section class="card">
+        <h2>7) 一鍵複製版（從 0 到更新）</h2>
+        <div class="cmd"># 1) 進專案目錄
+cd /path/to/web
+
+# 2) 初始化 + 檢查
+chmod +x scripts/*.sh
+npm run nas:bootstrap
+npm run nas:doctor
+
+# 3) 首次部署（第一次）
+npm run nas:deploy
+bash scripts/init-ssl.sh your-email@example.com
+
+# 4) 後續更新（平常）
+npm run nas:go</div>
+      </section>
+
+      <p class="footer">文件版本：v2（穩定不跑版版型）</p>
+    </div>
+
+    <script>
+      const boxes = () => Array.from(document.querySelectorAll('input[type="checkbox"]'));
+      document.getElementById("checkAll").addEventListener("click", () => boxes().forEach((b) => (b.checked = true)));
+      document.getElementById("clearAll").addEventListener("click", () => boxes().forEach((b) => (b.checked = false)));
+    </script>
+  </body>
+</html>
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Windows -> NAS 遷移清單 | 康鷹空間資訊</title>
+    <style>
+      :root {
+        --bg: #0b1020;
+        --panel: #121a30;
+        --panel-2: #1a2442;
+        --text: #edf2ff;
+        --muted: #b6c0e0;
+        --primary: #7cc4ff;
+        --accent: #7ef0c2;
+        --warn: #ffd27a;
+        --ok: #6cf0a4;
+        --border: rgba(255, 255, 255, 0.14);
+        --shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Segoe UI", "Noto Sans TC", Arial, sans-serif;
+        background: radial-gradient(circle at 20% 10%, #1d2a52 0%, var(--bg) 45%);
+        color: var(--text);
+        line-height: 1.6;
+      }
+
+      .container {
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .hero {
+        background: linear-gradient(135deg, rgba(124, 196, 255, 0.22), rgba(126, 240, 194, 0.18));
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 24px;
+        box-shadow: var(--shadow);
+        margin-bottom: 20px;
+      }
+
+      h1 {
+        margin: 0 0 8px;
+        font-size: 28px;
+      }
+
+      .subtitle {
+        margin: 0;
+        color: var(--muted);
+      }
+
+      .stats {
+        margin-top: 14px;
+        display: inline-flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .badge {
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid var(--border);
+        font-size: 12px;
+        color: #fff;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+        gap: 16px;
+      }
+
+      .card {
+        background: linear-gradient(180deg, var(--panel), var(--panel-2));
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 18px;
+        box-shadow: var(--shadow);
+      }
+
+      h2 {
+        margin: 0 0 10px;
+        font-size: 18px;
+      }
+
+      ul.checklist {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      ul.checklist li {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        margin: 10px 0;
+        color: var(--text);
+        word-break: break-word;
+      }
+
+      input[type="checkbox"] {
+        margin-top: 4px;
+        width: 18px;
+        height: 18px;
+        accent-color: #4fc3ff;
+      }
+
+      code {
+        background: rgba(0, 0, 0, 0.28);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 2px 6px;
+        color: #d7f8ff;
+        white-space: normal;
+        overflow-wrap: anywhere;
+      }
+
+      .cmd {
+        background: #0a1329;
+        border: 1px solid var(--border);
+        border-left: 4px solid var(--primary);
+        border-radius: 12px;
+        padding: 12px 14px;
+        overflow-x: auto;
+        font-family: Consolas, Monaco, monospace;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+        color: #d6f5ff;
+      }
+
+      .tips {
+        margin-top: 18px;
+        padding: 14px;
+        border-radius: 14px;
+        background: rgba(255, 210, 122, 0.12);
+        border: 1px solid rgba(255, 210, 122, 0.4);
+      }
+
+      .tips strong {
+        color: var(--warn);
+      }
+
+      .footer {
+        margin-top: 20px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .actions {
+        margin-top: 12px;
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      button {
+        cursor: pointer;
+        border: 1px solid var(--border);
+        background: rgba(124, 196, 255, 0.18);
+        color: #fff;
+        padding: 8px 12px;
+        border-radius: 10px;
+      }
+
+      button:hover {
+        background: rgba(124, 196, 255, 0.28);
+      }
+
+      @media print {
+        body {
+          background: #fff;
+          color: #000;
+        }
+        .hero,
+        .card,
+        .cmd,
+        .tips {
+          box-shadow: none;
+          border: 1px solid #ccc;
+          background: #fff;
+          color: #000;
+        }
+        .actions {
+          display: none;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 14px;
+        }
+
+        .hero {
+          padding: 16px;
+          border-radius: 14px;
+        }
+
+        h1 {
+          font-size: 22px;
+          line-height: 1.35;
+        }
+
+        .subtitle {
+          font-size: 14px;
+        }
+
+        .card {
+          padding: 14px;
+          border-radius: 12px;
+        }
+
+        h2 {
+          font-size: 16px;
+          line-height: 1.4;
+        }
+
+        .cmd {
+          font-size: 12px;
+          line-height: 1.5;
+          padding: 10px 12px;
+        }
+
+        button {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="container">
+      <section class="hero">
+        <h1>Windows -> NAS 遷移清單</h1>
+        <p class="subtitle">康鷹空間資訊網站部署流程（可勾選執行版）</p>
+        <div class="stats">
+          <span class="badge">目標：穩定上線</span>
+          <span class="badge">模式：Docker Compose</span>
+          <span class="badge">網域：kangying.com.tw</span>
+        </div>
+        <div class="actions">
+          <button type="button" id="checkAll">全部勾選</button>
+          <button type="button" id="uncheckAll">全部取消</button>
+          <button type="button" onclick="window.print()">列印 / 匯出 PDF</button>
+        </div>
+      </section>
+
+      <section class="grid">
+        <article class="card">
+          <h2>1) NAS 基礎準備</h2>
+          <ul class="checklist">
+            <li><input type="checkbox" />NAS 已啟用 SSH</li>
+            <li><input type="checkbox" />NAS 已安裝 Docker / Container 功能</li>
+            <li><input type="checkbox" />已建立持久化資料夾（如 <code>/volume1/docker/kangying</code>）</li>
+            <li><input type="checkbox" />路由器可設定 Port Forward（80 / 443）</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h2>2) 專案搬到 NAS</h2>
+          <ul class="checklist">
+            <li><input type="checkbox" />專案已放到 NAS（git clone / 上傳）</li>
+            <li><input type="checkbox" />可透過 SSH 進入專案目錄</li>
+            <li><input type="checkbox" />確認有 <code>docker-compose.yml</code>、<code>Dockerfile</code>、<code>scripts/</code></li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h2>3) 環境變數（最重要）</h2>
+          <ul class="checklist">
+            <li><input type="checkbox" />建立 <code>.env.local</code>（由 <code>.env.example</code> 複製）</li>
+            <li><input type="checkbox" />設定 <code>ADMIN_PASSWORD</code>（建議 bcrypt）</li>
+            <li><input type="checkbox" />設定 <code>DATA_PATH=/volume1/docker/kangying/data</code></li>
+            <li><input type="checkbox" />確認 <code>DATA_DIR=/data</code></li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h2>4) DNS 與網路</h2>
+          <ul class="checklist">
+            <li><input type="checkbox" /><code>kangying.com.tw</code> A 記錄指向 NAS 公網 IP</li>
+            <li><input type="checkbox" /><code>www</code> A 記錄指向同一 IP</li>
+            <li><input type="checkbox" />路由器已轉發 80 / 443 到 NAS</li>
+            <li><input type="checkbox" />NAS 防火牆允許 80 / 443</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h2>5) 首次部署</h2>
+          <div class="cmd">chmod +x scripts/*.sh
+npm run nas:doctor
+npm run nas:deploy
+bash scripts/init-ssl.sh 你的信箱</div>
+          <ul class="checklist">
+            <li><input type="checkbox" />部署命令全部成功</li>
+            <li><input type="checkbox" />SSL 憑證申請成功</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h2>6) 上線驗證</h2>
+          <ul class="checklist">
+            <li><input type="checkbox" /><code>https://kangying.com.tw</code> 可開啟</li>
+            <li><input type="checkbox" />首頁、產品列表、產品內頁正常</li>
+            <li><input type="checkbox" /><code>/upload</code> 可登入與儲存</li>
+            <li><input type="checkbox" />圖片與影片可正常顯示</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h2>7) 日常維運（之後主要用）</h2>
+          <div class="cmd">npm run nas:go
+npm run nas:rollback
+npm run nas:restore -- &lt;backup.tar.gz&gt;</div>
+          <ul class="checklist">
+            <li><input type="checkbox" />更新使用 <code>nas:go</code>（含備份與失敗自動回滾）</li>
+            <li><input type="checkbox" />異常時會使用 <code>nas:rollback</code></li>
+            <li><input type="checkbox" />備份可用 <code>nas:restore</code> 驗證還原</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h2>8) 排程與演練</h2>
+          <div class="cmd"># 每日凌晨 3 點備份
+0 3 * * * cd /path/to/web && bash scripts/backup.sh >> /var/log/kangying-backup.log 2>&1</div>
+          <ul class="checklist">
+            <li><input type="checkbox" />已設定每日自動備份</li>
+            <li><input type="checkbox" />每月完成一次還原演練</li>
+          </ul>
+        </article>
+      </section>
+
+      <section class="tips">
+        <strong>建議操作順序：</strong>
+        平常只要跑 <code>npm run nas:go</code>。如果更新失敗，先看 log，再執行 <code>npm run nas:rollback</code>。
+      </section>
+
+      <p class="footer">版本：v1.0 | 文件用途：NAS 部署與維運執行清單</p>
+    </main>
+
+    <script>
+      const allBoxes = () => Array.from(document.querySelectorAll('input[type="checkbox"]'));
+      document.getElementById("checkAll").addEventListener("click", () => {
+        allBoxes().forEach((b) => (b.checked = true));
+      });
+      document.getElementById("uncheckAll").addEventListener("click", () => {
+        allBoxes().forEach((b) => (b.checked = false));
+      });
+    </script>
+  </body>
+</html>

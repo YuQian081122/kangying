@@ -1,0 +1,46 @@
+---
+description: NAS 自架部署規則 — 康鷹空間資訊 Docker + Nginx 架構
+alwaysApply: true
+---
+
+# NAS 自架部署規則
+
+本專案部署在公司 NAS（kangying.com.tw），採用 Docker Compose + Nginx + Let's Encrypt 架構，**不使用 Vercel 或任何雲端託管平台**。
+
+## 部署流程
+
+每次完成程式碼變更後，必須執行本地 Docker 重建部署：
+
+```bash
+docker compose build && docker compose up -d
+```
+
+在確認 `docker compose logs -f` 無報錯、網站可正常瀏覽之前，不視為修改完成。
+
+## 架構約束
+
+- **儲存**：所有資料（JSON、上傳檔案）存放在本地檔案系統 `data/` 目錄，禁止使用 `@vercel/blob` 或任何雲端儲存 SDK
+- **圖片**：靜態產品圖放 `public/`，使用者上傳檔案存 `data/uploads/`，由 Nginx 直接提供或經 `/api/uploads/` 路由
+- **認證**：管理後台 `/upload` 使用 bcrypt 密碼雜湊 + `__Host-upload_auth` cookie，密碼從 `ADMIN_PASSWORD` 環境變數讀取
+- **SSL**：由 Certbot 容器自動管理 Let's Encrypt 憑證，每 12 小時檢查續期
+- **反向代理**：Nginx 負責 HTTPS 終端、Rate Limiting、靜態檔案快取、Gzip 壓縮
+
+## 安全規範
+
+- 所有 API 路由不得洩漏內部路徑或堆疊追蹤
+- 新增 API 端點時，需確認在 `nginx/conf.d/default.conf` 中有對應的 rate limit 規則
+- 敏感端點（`/api/upload/`、`/upload`）預留 IP 白名單區塊
+- `middleware.ts` 中的安全標頭（CSP、HSTS、X-Frame-Options 等）不得移除
+- `.env.local` 與 `data/` 目錄已加入 `.gitignore`，禁止提交至版本控制
+
+## 備份
+
+- 變更產品資料結構或上傳功能後，確認 `scripts/backup.sh` 仍能正確備份所有異動
+- 備份範圍：`data/json/`（含畫布配置 page-layouts.json）、`data/uploads/`
+
+## 禁止事項
+
+- 禁止使用 `vercel` CLI 或任何 Vercel 專用 API
+- 禁止引入 `@vercel/blob`、`@vercel/kv`、`@vercel/edge-config` 等套件
+- 禁止在 `next.config.js` 的 `images.remotePatterns` 中加入 `*.vercel-storage.com` 或 `dawngs.com`
+- 禁止移除 `output: "standalone"`（Docker 建構必需）

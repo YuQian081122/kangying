@@ -1,0 +1,30 @@
+---
+description: Docker 與 Nginx 設定規範
+globs: "{Dockerfile,docker-compose.yml,nginx/**}"
+alwaysApply: false
+---
+
+# Docker & Nginx 規範
+
+## Docker
+
+- 基底映像：`node:20-alpine`，多階段建構（deps → builder → runner）
+- 執行階段以非 root 使用者 `nextjs:nodejs`（UID 1001）運行
+- 資料目錄 `/data` 透過 Docker volume 掛載到主機
+- 環境變數由 `.env.local` 或 docker-compose `environment` 提供
+
+## Nginx
+
+- 全域設定在 `nginx/nginx.conf`（Rate Limit zones、Gzip、連線參數）
+- 站點設定在 `nginx/conf.d/default.conf`
+- Rate Limit zones：`general`（10r/s）、`auth`（5r/m）、`upload`（2r/s）
+- 上傳檔案由 Nginx `alias /data/uploads/` 直接提供，不經 Node.js
+- 新增端點時須在 `default.conf` 加入對應的 `location` 區塊與 rate limit
+- `/api/debug/` 在 Nginx 層級直接 `deny all`
+
+## SSL
+
+- Let's Encrypt 憑證由 Certbot 容器管理
+- 首次申請：`bash scripts/init-ssl.sh email@example.com`
+- 自動續期：Certbot entrypoint 每 12 小時檢查
+- 僅允許 TLS 1.2 / 1.3
